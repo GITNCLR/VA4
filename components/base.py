@@ -9,8 +9,7 @@ def sidebar():
     # Global variables to check on plots
     global showPlots
     global showCode
-    global start_h
-    global end_h
+
 
     st.sidebar.header('Dashboard setings')
     st.sidebar.write('Display settings:')
@@ -32,20 +31,36 @@ def sidebar():
         "Pagina",
         pages.keys()
     )
+    st.sidebar.header("Selecteer een start en eind datum:")
+    with st.sidebar.expander("Datum filter", False):
+        test = date_test()
+       # if (select == "RDW Data" or select == "Alles"):
+       #     # Date selector
 
-    if (select == "RDW Data" or select == "Alles"):
-        # Date selector
-        st.sidebar.header("Selecteer een start en eind datum:")
-        start_h = st.sidebar.date_input('Start datum', start_h, key = "startd")
-        end_h = st.sidebar.date_input('Eind datum', end_h, key = "endd")
+       #     start_h = st.sidebar.date_input('Start datum', start_h, key = "startd")
+       #     end_h = st.sidebar.date_input('Eind datum', end_h, key = "endd")
 
-        # Slider for date
-        start_h, end_h = st.sidebar.slider("Selecteer een periode", start_h, end_h,
-                                        (start_h, end_h), key="Globalslider")
+            # Slider for date
+       #     start_h, end_h = st.sidebar.slider("Selecteer een periode", start_h, end_h,
+       #                                     (start_h, end_h), key="Globalslider")
     
     pages[select].main()
 
     st.sidebar.markdown('[README.md](https://github.com/GITNCLR/VA4/blob/main/README.md)')
+
+def date_test():
+
+    global start_h
+    global end_h
+    start_h, end_h = (date(1970, 2, 1), date.today())
+
+    # Date selector
+    start_h = st.date_input('Start datum', start_h, key = "startd")
+    end_h = st.date_input('Eind datum', end_h, key = "endd")
+
+    # Slider for date
+    start_h, end_h = st.slider("Selecteer een periode", start_h, end_h,
+                                            (start_h, end_h), key="Globalslider")
 
 def main():
     sidebar()
