@@ -20,7 +20,7 @@ def main():
         st.markdown("*Referenties: https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Gekentekende_voertuigen_brandstof/8ys7-d773, https://opendata.rdw.nl/Voertuigen/Open-Data-RDW-Gekentekende_voertuigen/m9d7-ebf2*")
         st.markdown("*De RDW-dataset is een set die bestaat uit geregistreerde autos in Nederland. De RDW heeft veel verschillende datasets met betrekking tot de autos in Nederland. We hebben gekozen voor degene die alle geregistreerde autos waarbij de datum vermeldt staat en een andere dataset die het brandstoftype van de auto laat zien. We hebben dit samengevoegd tot één dataframe en meer dan de helft van de kolommen verwijderd. We hebben ook gecontroleerd of er dubbele registraties in de dataset waren en dit bleek waar te zijn. We analyseerden deze records en kwamen tot de conclusie dat de records precies hetzelfde zijn.*")
 
-        st.markdown("***")
+    st.markdown("***")
     #components.laadpalen.main()
-    components.ocm.main()
-    components.rdw.main()
+    #components.ocm.main()
+    #components.rdw.main()
