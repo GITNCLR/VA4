@@ -45,7 +45,7 @@ def sidebar():
     
     pages[select].main()
 
-    st.sidebar.markdown('[README.md](https://github.com/ItsMeSafak/electric-energy-dashboard/blob/master/README.md)')
+    st.sidebar.markdown('[README.md](https://github.com/GITNCLR/VA4/blob/main/README.md)')
 
 def main():
     sidebar()
