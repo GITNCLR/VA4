@@ -1,6 +1,6 @@
 import streamlit as st
-import components.filename1
-import components.filename2
+#import components.filename1
+#import components.filename2
 
 
 def main():
