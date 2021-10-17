@@ -5,12 +5,16 @@ import streamlit as st
 
 def main():
 
+
+    st.title("VA 4 dashboard")
+    st.markdown("***")
     col1, col2 = st.columns([2, 1])
 
     with col2:
         st.image("assets/cat-vibe.gif")
     with col1:
-        st.title("VA 4 dashboard")
+        #st.title("VA 4 dashboard")
+        #st.markdown("***")
         st.markdown("*Welkom bij het VA4 Dashboard van Team 1*")
         st.header("Test")
         st.subheader("test")
