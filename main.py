@@ -1,5 +1,5 @@
 import streamlit as st
-import ~/.streamlit/config.toml
+
 st.set_page_config(
         page_title='VA 4',
         layout='wide',
