@@ -2,8 +2,7 @@ import streamlit as st
 st.set_page_config(
         page_title='VA 4',
         layout='wide',
-        initial_sidebar_state="expanded",
-        theme= "Light"
+        initial_sidebar_state="expanded"
     )
 
 # Mainsss
