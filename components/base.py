@@ -23,6 +23,7 @@ def sidebar():
         "Open charge map": components.ocm,
         "RDW Data": components.rdw
     }
+
     st.sidebar.title("Navigatie")
     select = st.sidebar.selectbox(
         "Pagina",
