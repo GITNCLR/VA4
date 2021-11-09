@@ -62,17 +62,11 @@ def eikenbomen_denhaag():
 
 def main():
     st.header("Eikenbomen")
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.image("assets/rups.jpg")
     col1, _, col3 = st.columns([3, 1, 3])
-    #with col3:
-        #global x_col
-        #global y_col
-        #x_col = st.selectbox(
-        #    "X Waarde",
-        #    main_df.columns)
-        #y_col = st.selectbox(
-        #    "Y Waarde",
-        #    main_df.columns,
-        #    index=2)
+
     with col1:
         show_with_options(eikenbomen_amsterdam, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
     with col3:

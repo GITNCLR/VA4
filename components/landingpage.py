@@ -11,7 +11,7 @@ def main():
     col1, col2 = st.columns([2, 1])
 
     with col2:
-        st.image("assets/cat-vibe.gif")
+        st.image("assets/bomen.jpg")
     with col1:
         #st.title("VA 4 dashboard")
         #st.markdown("***")
@@ -24,5 +24,4 @@ def main():
     st.markdown("***")
     #components.filename1.main()
     #components.filename2.main()
-
 
