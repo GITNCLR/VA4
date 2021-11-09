@@ -4,6 +4,7 @@ import components.Bomen
 import components.landingpage
 import components.Eikenbomen
 import components.Eigenaren
+
 def sidebar():
     # Global variables to check on plots
     global showPlots
