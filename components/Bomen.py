@@ -3,9 +3,9 @@ from utils.helpers import fetchLaadPaalData, show_with_options
 import plotly.express as px
 import streamlit as st
 import pandas as pd
-import plotly.figure_factory as ff
-import plotly.graph_objects as go
-from statsmodels.formula.api import ols
+import folium
+from folium.plugins import MarkerCluster
+from streamlit_folium import folium_static
 
 file = "data/BOMEN1.csv"
 file1 = "data/BOMEN2.csv"
@@ -97,6 +97,39 @@ def aantal_soorten_bomen():
         legend_title="Stad")
     st.plotly_chart(fig, use_container_width=True)
 
+def map_amsterdam():
+    amsterdamm = amsterdam.sample(n = 20000)
+    m = folium.Map(location=["52.380858", "4.862874"])
+
+    marker_cluster = MarkerCluster(name="key", disableClusteringAtZoom=18).add_to(m)
+
+    amsterdamm.apply(lambda x: folium.Marker([x["LAT"], x["LNG"]],
+                                             popup="Boomnummer: " + str(x["Boomnummer"]) + "<br><br>" + "Soortnaam: " +
+                                                   x["Soortnaam_NL"],
+                                             icon=folium.Icon(color='black', icon_color='#FFFFFF')).add_to(
+        marker_cluster),
+                     axis=1)
+
+    #folium.LayerControl().add_to(m)
+    folium_static(m)
+
+def map_denhaag():
+    denhaag = df_denhaag.dropna(subset = ["BOOMNUMMER"]).sample(n = 20000)
+    denhaag["BOOMNUMMER"] = denhaag["BOOMNUMMER"].astype("int").astype("str")
+
+    m = folium.Map(location=["52.074947", "4.304368"])
+
+    marker_cluster = MarkerCluster(name="key", disableClusteringAtZoom=16).add_to(m)
+
+    denhaag.apply(lambda x: folium.Marker([x["LAT"], x["LONG"]],
+                                          popup="Boomnummer: " + str(
+                                              x["BOOMNUMMER"]) + "<br><br>" + "Soortnaam: " + str(
+                                              x["BOOMSOORT_NEDERLANDS"]),
+                                          icon=folium.Icon(color='black', icon_color='#FFFFFF')).add_to(marker_cluster),
+                  axis=1)
+
+    #folium.LayerControl().add_to(m)
+    folium_static(m)
 
 def main():
     st.header("Bomen")
@@ -128,6 +161,13 @@ def main():
                       "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
     show_with_options(aantal_soorten_bomen,
                       "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+    with col1:
+        show_with_options(map_amsterdam, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+    with col3:
+        show_with_options(map_denhaag,
+                          "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+
+
 st.markdown("***")
 
 
