@@ -101,9 +101,21 @@ def boomstam_leeftijd_corr_dh():
     df_denhaag['STAMDIAMETERKLASSE2'] = df_denhaag['STAMDIAMETERKLASSE'].astype("str").apply(
         lambda x: "100" if x[-5:-3] == "00" else ("0" if x[-5:-3] == "" else x[-5:-3]))
     df_denhaag['STAMDIAMETERKLASSE2'] = df_denhaag['STAMDIAMETERKLASSE2'].astype("int")
-    df_denhaag['STAMDIAMETERKLASSE2']
 
     df = pd.DataFrame(df_denhaag, columns=['STAMDIAMETERKLASSE2', 'LEEFTIJD'])
+
+    #corr_mat_dh = df.corr()
+    #fig = sn.heatmap(corr_mat_dh, annot=True)
+    #st.pyplot(fig, use_container_width=True)
+
+    fig, ax = plt.subplots()
+    sn.heatmap(df.corr(), ax=ax,annot=True)
+    st.write(fig)
+
+
+def boomstam_leeftijd_corr_A():
+
+    df = pd.DataFrame(amsterdam, columns=['Boomnummer','Plantjaar', 'RADIUS', 'leeftijd'])
 
     #corr_mat_dh = df.corr()
     #fig = sn.heatmap(corr_mat_dh, annot=True)
@@ -130,6 +142,8 @@ def main():
         show_with_options(boomhoogte_leeftijd_amsterdam,
                           "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
         show_with_options(stadsdeel_leeftijd_amsterdam,
+                          "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+        show_with_options(boomstam_leeftijd_corr_A,
                           "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
         show_with_options(radius_leeftijd_amsterdam,
                           "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
