@@ -1,5 +1,6 @@
 import streamlit as st
 from utils.helpers import fetchLaadPaalData, show_with_options
+import components.base as SampleS
 import plotly.express as px
 import streamlit as st
 import pandas as pd
@@ -98,7 +99,7 @@ def aantal_soorten_bomen():
     st.plotly_chart(fig, use_container_width=True)
 
 def map_amsterdam():
-    amsterdamm = amsterdam.sample(n = 20000)
+    amsterdamm = amsterdam.sample(n = SampleS.sample)
     m = folium.Map(location=["52.380858", "4.862874"])
 
     marker_cluster = MarkerCluster(name="key", disableClusteringAtZoom=18).add_to(m)
@@ -114,7 +115,7 @@ def map_amsterdam():
     folium_static(m)
 
 def map_denhaag():
-    denhaag = df_denhaag.dropna(subset = ["BOOMNUMMER"]).sample(n = 20000)
+    denhaag = df_denhaag.dropna(subset = ["BOOMNUMMER"]).sample(n = SampleS.sample)
     denhaag["BOOMNUMMER"] = denhaag["BOOMNUMMER"].astype("int").astype("str")
 
     m = folium.Map(location=["52.074947", "4.304368"])
@@ -134,16 +135,7 @@ def map_denhaag():
 def main():
     st.header("Bomen")
     col1, _, col3 = st.columns([3, 1, 3])
-    #with col3:
-        #global x_col
-        #global y_col
-        #x_col = st.selectbox(
-        #    "X Waarde",
-        #    main_df.columns)
-        #y_col = st.selectbox(
-        #    "Y Waarde",
-        #    main_df.columns,
-        #    index=2)
+
     with col1:
         st.image("assets/amsterdam.png", width=200)
         show_with_options(boomsoorten_amsterdam, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
@@ -169,6 +161,7 @@ def main():
 
 
 st.markdown("***")
+
 
 
 

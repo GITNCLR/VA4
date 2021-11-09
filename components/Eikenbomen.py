@@ -1,8 +1,12 @@
 import streamlit as st
 from utils.helpers import fetchLaadPaalData, show_with_options
+import components.base as SampleS
 import plotly.express as px
 import streamlit as st
 import pandas as pd
+import folium
+from folium.plugins import MarkerCluster
+from streamlit_folium import folium_static
 import plotly.figure_factory as ff
 import plotly.graph_objects as go
 from statsmodels.formula.api import ols
@@ -58,7 +62,54 @@ def eikenbomen_denhaag():
         yaxis_title="Aantal")
     st.plotly_chart(fig, use_container_width=True)
 
+def map_amsterdam():
+    sample = SampleS.sample
+    amsterdamm = amsterdam[amsterdam['Soortnaam_NL'].str.contains("eik")]
 
+    if len(amsterdamm) < sample:
+        sample = len(amsterdamm)
+
+    amsterdamm = amsterdamm.sample(n = sample)
+    m = folium.Map(location=["52.380858", "4.862874"])
+
+    marker_cluster = MarkerCluster(name="key", disableClusteringAtZoom=18).add_to(m)
+
+    amsterdamm.apply(lambda x: folium.Marker([x["LAT"], x["LNG"]],
+                                             popup="Boomnummer: " + str(x["Boomnummer"]) + "<br><br>" + "Soortnaam: " +
+                                                   x["Soortnaam_NL"],
+                                             icon=folium.Icon(color='black', icon_color='#FFFFFF')).add_to(
+        marker_cluster),
+                     axis=1)
+
+    #folium.LayerControl().add_to(m)
+    folium_static(m)
+
+def map_denhaag():
+
+    sample = SampleS.sample
+
+    denhaag = df_denhaag.dropna(subset = ["BOOMNUMMER", 'BOOMSOORT_NEDERLANDS'])
+    denhaag = denhaag[denhaag['BOOMSOORT_NEDERLANDS'].str.contains("eik")]
+    if len(denhaag) < sample:
+        sample = len(denhaag)
+
+    denhaag = denhaag.sample(n = sample)
+
+    denhaag["BOOMNUMMER"] = denhaag["BOOMNUMMER"].astype("int").astype("str")
+
+    m = folium.Map(location=["52.074947", "4.304368"])
+
+    marker_cluster = MarkerCluster(name="key", disableClusteringAtZoom=16).add_to(m)
+
+    denhaag.apply(lambda x: folium.Marker([x["LAT"], x["LONG"]],
+                                          popup="Boomnummer: " + str(
+                                              x["BOOMNUMMER"]) + "<br><br>" + "Soortnaam: " + str(
+                                              x["BOOMSOORT_NEDERLANDS"]),
+                                          icon=folium.Icon(color='black', icon_color='#FFFFFF')).add_to(marker_cluster),
+                  axis=1)
+
+    #folium.LayerControl().add_to(m)
+    folium_static(m)
 
 def main():
     st.header("Eikenbomen")
@@ -71,7 +122,14 @@ def main():
         show_with_options(eikenbomen_amsterdam, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
     with col3:
         show_with_options(eikenbomen_denhaag, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+    with col1:
+        show_with_options(map_amsterdam,
+                          "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+    with col3:
+        show_with_options(map_denhaag,
+                          "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
 st.markdown("***")
+
 
 
 

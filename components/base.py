@@ -31,8 +31,8 @@ def sidebar():
     )
 
     st.sidebar.header("Selecteer een start en eind datum:")
-    with st.sidebar.expander("Datum filter", False):
-        date_selector()
+    with st.sidebar.expander("Kaart Sample Size", False):
+        sample_size()
     
     pages[select].main()
 
@@ -54,8 +54,20 @@ def date_selector():
         start_h, end_h = st.slider("Selecteer een periode", start_h, end_h,
                                             (start_h, end_h), key="Globalslider")
 
+
+def sample_size():
+
+    global sample
+
+    col1, col2, col3 = st.columns([1, 9, 1])
+    with col2:
+    # Date selector
+        sample = st.selectbox('Sample Size', (1000, 2000, 3000, 4000, 5000, 10000, 20000))
+
+
 def main():
     sidebar()
+
 
 
 
