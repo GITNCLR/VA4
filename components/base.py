@@ -30,7 +30,7 @@ def sidebar():
         pages.keys()
     )
 
-    st.sidebar.header("Selecteer een start en eind datum:")
+    st.sidebar.header("Selecteer een Samplesize:")
     with st.sidebar.expander("Kaart Sample Size", False):
         sample_size()
     
@@ -63,6 +63,8 @@ def sample_size():
     with col2:
     # Date selector
         sample = st.selectbox('Sample Size', (1000, 2000, 3000, 4000, 5000, 10000, 20000))
+    st.write(
+        "*Selecteer een hogere sample size voor een completere weergave. Hoe hoger de samplesize hoe langer de laadtijd.*")
 
 
 def main():
