@@ -1,10 +1,8 @@
 import streamlit as st
 from datetime import date
-import components.laadpalen
-import components.ocm
-import components.rdw
+import components.Bomen
 import components.landingpage
-
+import components.Eikenbomen
 def sidebar():
     # Global variables to check on plots
     global showPlots
@@ -18,10 +16,10 @@ def sidebar():
     showCode = st.sidebar.checkbox('Show code', False)
 
     pages = {
-        "Alles": components.landingpage,
-        "Laadpalen": components.laadpalen,
-        "Open charge map": components.ocm,
-        "RDW Data": components.rdw
+        "Bomen": components.Bomen,
+        "Eikenbomen": components.Eikenbomen,
+        #"Open charge map": components.ocm,
+        #"RDW Data": components.rdw
     }
 
     st.sidebar.title("Navigatie")
@@ -56,3 +54,4 @@ def date_selector():
 
 def main():
     sidebar()
+

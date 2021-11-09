@@ -29,36 +29,47 @@ amsterdam = amsterdam.assign(leeftijd=lambda x: 2021 - x['Plantjaar'])
 df_denhaag=pd.read_csv('data/bomen_denhaag.csv',sep=";", encoding="latin-1")
 naless_denhaag = df_denhaag.dropna(subset = ['BOOMSOORT_NEDERLANDS'])
 
-eik_denhaag = naless_denhaag['BOOMSOORT_NEDERLANDS'].str.contains("eik")
-df_eik_denhaag=naless_denhaag[eik_denhaag]['BOOMSOORT_NEDERLANDS'].value_counts()
-df_eik_denhaag= pd.DataFrame(df_eik_denhaag)
 
-
-eik_amsterdam= amsterdam['Soortnaam_NL'].str.contains("eik")
-df_eik_amsterdam=amsterdam[eik_amsterdam]['Soortnaam_NL'].value_counts()
-df_eik_amsterdam= pd.DataFrame(df_eik_amsterdam)
-
-
-def eikenbomen_amsterdam():
-    fig = px.histogram(df_eik_amsterdam, x=df_eik_amsterdam.index, y='Soortnaam_NL')
-
+def boomsoorten_amsterdam():
+    fig = px.histogram(amsterdam, x='Soortnaam_NL')
     fig.update_layout(
-        title="Eikenbomen in Amsterdam",
+        title="Boomsoorten in Amsterdam",
         xaxis_title="Boomsoort",
         yaxis_title="Aantal")
     st.plotly_chart(fig, use_container_width=True)
 
 
-def eikenbomen_denhaag():
-    fig = px.histogram(df_eik_denhaag, x=df_eik_denhaag.index, y='BOOMSOORT_NEDERLANDS')
-
+def boomsoorten_denhaag():
+    fig = px.histogram(naless_denhaag, x='BOOMSOORT_NEDERLANDS')
     fig.update_layout(
-        title="Eikenbomen in Den Haag",
+        title="Boomsoorten in Den Haag",
         xaxis_title="Boomsoort",
         yaxis_title="Aantal")
     st.plotly_chart(fig, use_container_width=True)
 
 
+def boomsoorten_t5_a():
+    top5_amsterdam = amsterdam['Soortnaam_NL'].value_counts(ascending=False)[0:5]
+    st.write(top5_amsterdam)
+    top5_amsterdam2 = pd.DataFrame(top5_amsterdam)
+    fig = px.histogram(top5_amsterdam2, x=top5_amsterdam2.index, y='Soortnaam_NL', color=top5_amsterdam2.index)
+
+    fig.update_layout(
+        title="Top 5 boomsoorten in Amsterdam",
+        xaxis_title="Boomsoort",
+        yaxis_title="Aantal")
+    st.plotly_chart(fig, use_container_width=True)
+
+def boomsoorten_t5_d():
+    top5_denhaag = naless_denhaag['BOOMSOORT_NEDERLANDS'].value_counts(ascending=False)[0:5]
+    st.write(top5_denhaag)
+    top5_denhaag2 = pd.DataFrame(top5_denhaag)
+    fig = px.histogram(top5_denhaag2, x=top5_denhaag2.index, y='BOOMSOORT_NEDERLANDS', color=top5_denhaag2.index)
+    fig.update_layout(
+        title="Top 5 boomsoorten in Den Haag",
+        xaxis_title="Boomsoort",
+        yaxis_title="Aantal")
+    st.plotly_chart(fig, use_container_width=True)
 
 def main():
     st.header("Bomen")
@@ -74,15 +85,15 @@ def main():
         #    main_df.columns,
         #    index=2)
     with col1:
-        show_with_options(eikenbomen_amsterdam, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+        show_with_options(boomsoorten_amsterdam, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
     with col3:
-        show_with_options(eikenbomen_denhaag, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+        show_with_options(boomsoorten_denhaag, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
 
-    #with col1:
-    #    show_with_options(boomsoorten_t5_a, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+    with col1:
+        show_with_options(boomsoorten_t5_a, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
 
-    #with col3:
-    #    show_with_options(boomsoorten_t5_d, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+    with col3:
+        show_with_options(boomsoorten_t5_d, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
 
     #show_with_options(histogram_chargetime, "In het figuur van de dichtheid functie is te zien dat de meeste waarden liggen tussen de 30 minuten en 5 uur. Dit wordt ondersteunt door het gemiddelde van 2,8 uur en de mediaan van 2,5 uur.")
     #with st.expander("Boxplot", False):
