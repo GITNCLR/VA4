@@ -1,7 +1,7 @@
 # Custom ignores
 .idea
 .streamlit/secrets.toml
-
+data/__Bomen (2).ipynb
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
