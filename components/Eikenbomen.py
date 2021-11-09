@@ -111,11 +111,37 @@ def map_denhaag():
     #folium.LayerControl().add_to(m)
     folium_static(m)
 
+def aantal_eiken():
+
+    denhaag = df_denhaag.dropna(subset=["BOOMNUMMER", 'BOOMSOORT_NEDERLANDS'])
+    denhaag = denhaag[denhaag['BOOMSOORT_NEDERLANDS'].str.contains("eik")]
+    n_eik_d = len(denhaag)
+    n_eik_a = len(amsterdam[amsterdam['Soortnaam_NL'].str.contains("eik")])
+
+    dict2 = {"Count": [n_eik_a, n_eik_d]}
+    brics2 = pd.DataFrame(dict2)
+    brics2.index = ['Amsterdam', 'Den Haag']
+    fig = px.bar(brics2, x=['Amsterdam', 'Den Haag'], y='Count', color=['Amsterdam', 'Den Haag'])
+    fig.update_layout(
+        title="Aantal Eikenbomen in Amsterdam en Den Haag",
+        xaxis_title="Stad",
+        yaxis_title="Aantal soorten bomen",
+        legend_title="Stad")
+    st.plotly_chart(fig, use_container_width=True)
+
+
 def main():
     st.header("Eikenbomen")
     col1, col2, col3 = st.columns([1, 2, 1])
+
     with col2:
         st.image("assets/rups.jpg")
+
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col1:
+        st.image("assets/amsterdam.png", width=200)
+    with col3:
+        st.image("assets/denhaag.png", width=200)
     col1, _, col3 = st.columns([3, 1, 3])
 
     with col1:
@@ -128,7 +154,10 @@ def main():
     with col3:
         show_with_options(map_denhaag,
                           "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
-st.markdown("***")
+    st.markdown("***")
+    show_with_options(aantal_eiken,
+                  "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+
 
 
 
