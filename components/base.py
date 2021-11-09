@@ -3,6 +3,7 @@ from datetime import date
 import components.Bomen
 import components.landingpage
 import components.Eikenbomen
+import components.Eigenaren
 def sidebar():
     # Global variables to check on plots
     global showPlots
@@ -16,10 +17,10 @@ def sidebar():
     showCode = st.sidebar.checkbox('Show code', False)
 
     pages = {
+        "Home": components.landingpage,
         "Bomen": components.Bomen,
         "Eikenbomen": components.Eikenbomen,
-        #"Open charge map": components.ocm,
-        #"RDW Data": components.rdw
+        "Eigenaren": components.Eigenaren
     }
 
     st.sidebar.title("Navigatie")
@@ -54,4 +55,5 @@ def date_selector():
 
 def main():
     sidebar()
+
 
