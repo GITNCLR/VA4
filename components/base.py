@@ -4,6 +4,7 @@ import components.Bomen
 import components.landingpage
 import components.Eikenbomen
 import components.Eigenaren
+import components.Leeftijd
 
 def sidebar():
     # Global variables to check on plots
@@ -21,7 +22,8 @@ def sidebar():
         "Home": components.landingpage,
         "Bomen": components.Bomen,
         "Eikenbomen": components.Eikenbomen,
-        "Eigenaren": components.Eigenaren
+        "Eigenaren": components.Eigenaren,
+        "Leeftijd": components.Leeftijd
     }
 
     st.sidebar.title("Navigatie")
