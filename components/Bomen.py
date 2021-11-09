@@ -112,10 +112,12 @@ def main():
         #    main_df.columns,
         #    index=2)
     with col1:
+        st.image("assets/amsterdam.png", width=200)
         show_with_options(boomsoorten_amsterdam, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
     with col3:
+        st.image("assets/denhaag.png", width=200)
         show_with_options(boomsoorten_denhaag, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
-
+    st.markdown("***")
     with col1:
         show_with_options(boomsoorten_t5_a, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
 
