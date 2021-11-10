@@ -76,25 +76,44 @@ def boomhoogte_leeftijd_amsterdam():
                  category_orders={'Boomhoogte': ['tot 6 m.', '6 tot 9 m.', '6 tot 12 m.', '9 tot 12 m.', '12 tot 15 m.',
                                                  '12 tot 18 m.', '15 tot 18 m.', '18 tot 24 m.', '24 m. en hoger',
                                                  'Onbekend']})
+    fig.update_layout(title="Leeftijd per boomhoogte klasse",
+        yaxis_title="Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
 
 def radius_leeftijd_amsterdam():
     fig = px.box(amsterdam, x='RADIUS', y='leeftijd')
+    fig.update_layout(
+        title="Leeftijd per Radius klasse",
+        xaxis_title="Radiusklasse",
+        yaxis_title="Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
 
 def stamdia_leeftijd_denhaag():
     fig = px.box(df_denhaag, x='STAMDIAMETERKLASSE', y='LEEFTIJD',
                  category_orders={
                      'STAMDIAMETERKLASSE': ['0-10 cm', '10-25 cm', '25-50 cm', '50-75 cm', '75-100 cm', '>100 cm']})
+    fig.update_layout(
+        title="Leeftijd per Stamdiameterklasse Denhaag",
+        xaxis_title="Stamdiameterklasse",
+        yaxis_title="Leeftijd in jaren")
 
     st.plotly_chart(fig, use_container_width=True)
 
 def stadsdeel_leeftijd_denhaag():
     fig = px.box(df_denhaag, x='STADSDEEL', y='LEEFTIJD')
+    fig.update_layout(
+    title = "Leeftijd per stadsdeel Den Haag",
+    xaxis_title = "Stadsdeel",
+    yaxis_title = "Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
+
 
 def stadsdeel_leeftijd_amsterdam():
     fig = px.box(amsterdam, x='Beheerder', y='leeftijd')
+    fig.update_layout(
+    title = "Leeftijd per Beheerder Amsterdam",
+    xaxis_title = "Beheerder",
+    yaxis_title = "Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
 
 def boomstam_leeftijd_corr_dh():
