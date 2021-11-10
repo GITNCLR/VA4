@@ -27,7 +27,7 @@ with open(file3):
 amsterdam = amsterdam.assign(leeftijd=lambda x: 2021 - x['Plantjaar'])
 
 df_denhaag=pd.read_csv('data/bomen_denhaag.csv',sep=";", encoding="latin-1")
-naless_denhaag = df_denhaag.dropna(subset = ['BOOMSOORT_NEDERLANDS'])
+naless_denhaag = df_denhaag.dropna(subset = ['BOOMSOORT_NEDERLANDS', 'EIGENAAR'])
 
 
 
@@ -41,7 +41,7 @@ def eigenaren_amsterdam():
 
 
 def eigenaren_denhaag():
-    fig = px.histogram(naless_denhaag, x='EIGENAAR')
+    fig = px.histogram(naless_denhaag, x='EIGENAAR', color='EIGENAAR')
     fig.update_layout(
         title="Eigenaren van de bomen in Den Haag",
         xaxis_title="Eigenaar",

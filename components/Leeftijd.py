@@ -26,6 +26,7 @@ with open(file3):
     amsterdam = pd.concat([amsterdam, pd.read_csv(file3, sep=";")])
 
 amsterdam = amsterdam.assign(leeftijd=lambda x: 2021 - x['Plantjaar'])
+amsterdam["leeftijd"] = amsterdam["leeftijd"].replace(2021,0)
 amsterdam = amsterdam.drop(columns=['Unnamed: 17'])
 
 
@@ -144,6 +145,14 @@ def boomstam_leeftijd_corr_A():
     sn.heatmap(df.corr(), ax=ax,annot=True)
     st.write(fig)
 
+def boomnummer_leeftijd_amsterdam():
+    fig = px.scatter(amsterdam, x='Boomnummer', y='leeftijd')
+    fig.update_layout(
+    title = "Leeftijd per Boomnummer Amsterdam",
+    xaxis_title = "Boomnummer",
+    yaxis_title = "Leeftijd in jaren")
+    st.plotly_chart(fig, use_container_width=True)
+
 def main():
     st.header("Leeftijd")
 
@@ -165,6 +174,8 @@ def main():
         show_with_options(boomstam_leeftijd_corr_A,
                           "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
         show_with_options(radius_leeftijd_amsterdam,
+                          "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+        show_with_options(boomnummer_leeftijd_amsterdam,
                           "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
     with col3:
         st.image("assets/denhaag.png", width=200)

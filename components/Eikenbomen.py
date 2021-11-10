@@ -29,6 +29,7 @@ with open(file3):
     amsterdam = pd.concat([amsterdam, pd.read_csv(file3, sep=";")])
 
 amsterdam = amsterdam.assign(leeftijd=lambda x: 2021 - x['Plantjaar'])
+amsterdam["leeftijd"] = amsterdam["leeftijd"].replace(2021,0)
 
 df_denhaag=pd.read_csv('data/bomen_denhaag.csv',sep=";", encoding="latin-1")
 naless_denhaag = df_denhaag.dropna(subset = ['BOOMSOORT_NEDERLANDS'])
@@ -41,7 +42,9 @@ df_eik_denhaag= pd.DataFrame(df_eik_denhaag)
 eik_amsterdam= amsterdam['Soortnaam_NL'].str.contains("eik")
 df_eik_amsterdam=amsterdam[eik_amsterdam]['Soortnaam_NL'].value_counts()
 df_eik_amsterdam= pd.DataFrame(df_eik_amsterdam)
-
+df_eik_denhaag["Soortnaam"] = df_eik_denhaag.index.str.title()
+#print(df_denhaag['BOOMSOORT_NEDERLANDS'].isna().sum())
+#df_denhaag['BOOMSOORT_NEDERLANDS'] = df_denhaag['BOOMSOORT_NEDERLANDS'].astype("str").str.title()
 
 def eikenbomen_amsterdam():
     fig = px.histogram(df_eik_amsterdam, x=df_eik_amsterdam.index, y='Soortnaam_NL')
@@ -54,7 +57,7 @@ def eikenbomen_amsterdam():
 
 
 def eikenbomen_denhaag():
-    fig = px.histogram(df_eik_denhaag, x=df_eik_denhaag.index, y='BOOMSOORT_NEDERLANDS')
+    fig = px.histogram(df_eik_denhaag, x="Soortnaam", y='BOOMSOORT_NEDERLANDS')
 
     fig.update_layout(
         title="Eikenbomen in Den Haag",
@@ -75,9 +78,10 @@ def map_amsterdam():
     marker_cluster = MarkerCluster(name="key", disableClusteringAtZoom=18).add_to(m)
 
     amsterdamm.apply(lambda x: folium.Marker([x["LAT"], x["LNG"]],
-                                             popup="Boomnummer: " + str(x["Boomnummer"]) + "<br><br>" + "Soortnaam: " +
-                                                   x["Soortnaam_NL"],
-                                             icon=folium.Icon(color='black', icon_color='#FFFFFF')).add_to(
+                                             popup="Boomnummer: " + str(x["Boomnummer"]) + "<br><br>"
+                                                    + "Soortnaam: " + x["Soortnaam_NL"] + "<br><br>"
+                                                    + "Leeftijd: " + str(int(x["leeftijd"])) + " Jaar",
+                                             icon=folium.Icon(color='green', icon_color='#FFFFFF')).add_to(
         marker_cluster),
                      axis=1)
 
@@ -102,10 +106,10 @@ def map_denhaag():
     marker_cluster = MarkerCluster(name="key", disableClusteringAtZoom=16).add_to(m)
 
     denhaag.apply(lambda x: folium.Marker([x["LAT"], x["LONG"]],
-                                          popup="Boomnummer: " + str(
-                                              x["BOOMNUMMER"]) + "<br><br>" + "Soortnaam: " + str(
-                                              x["BOOMSOORT_NEDERLANDS"]),
-                                          icon=folium.Icon(color='black', icon_color='#FFFFFF')).add_to(marker_cluster),
+                                          popup="Boomnummer: " + str(x["BOOMNUMMER"]) + "<br><br>"
+                                                + "Soortnaam: " + str(x["BOOMSOORT_NEDERLANDS"]) + "<br><br>"
+                                                + "Leeftijd: " + str(int(x["LEEFTIJD"])) + " Jaar",
+                                          icon=folium.Icon(color='green', icon_color='#FFFFFF')).add_to(marker_cluster),
                   axis=1)
 
     #folium.LayerControl().add_to(m)

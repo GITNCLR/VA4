@@ -26,8 +26,10 @@ with open(file3):
     amsterdam = pd.concat([amsterdam, pd.read_csv(file3, sep=";")])
 
 amsterdam = amsterdam.assign(leeftijd=lambda x: 2021 - x['Plantjaar'])
+amsterdam["leeftijd"] = amsterdam["leeftijd"].replace(2021,0)
 
 df_denhaag=pd.read_csv('data/bomen_denhaag.csv',sep=";", encoding="latin-1")
+df_denhaag['BOOMSOORT_NEDERLANDS'] = df_denhaag['BOOMSOORT_NEDERLANDS'].str.title()
 naless_denhaag = df_denhaag.dropna(subset = ['BOOMSOORT_NEDERLANDS'])
 
 
@@ -51,21 +53,22 @@ def boomsoorten_denhaag():
 
 def boomsoorten_t5_a():
     top5_amsterdam = amsterdam['Soortnaam_NL'].value_counts(ascending=False)[0:5]
-    st.write(top5_amsterdam)
+    #st.write(top5_amsterdam)
     top5_amsterdam2 = pd.DataFrame(top5_amsterdam)
-    fig = px.histogram(top5_amsterdam2, x=top5_amsterdam2.index, y='Soortnaam_NL', color=top5_amsterdam2.index)
+    fig = px.histogram(top5_amsterdam2, x=top5_amsterdam2.index, y='Soortnaam_NL', color=top5_amsterdam2.index, color_discrete_sequence=["green", "yellow", "orange", 'red', "lightblue"])
 
     fig.update_layout(
         title="Top 5 boomsoorten in Amsterdam",
         xaxis_title="Boomsoort",
         yaxis_title="Aantal")
+
     st.plotly_chart(fig, use_container_width=True)
 
 def boomsoorten_t5_d():
     top5_denhaag = naless_denhaag['BOOMSOORT_NEDERLANDS'].value_counts(ascending=False)[0:5]
-    st.write(top5_denhaag)
+    #st.write(top5_denhaag)
     top5_denhaag2 = pd.DataFrame(top5_denhaag)
-    fig = px.histogram(top5_denhaag2, x=top5_denhaag2.index, y='BOOMSOORT_NEDERLANDS', color=top5_denhaag2.index)
+    fig = px.histogram(top5_denhaag2, x=top5_denhaag2.index, y='BOOMSOORT_NEDERLANDS', color=top5_denhaag2.index, color_discrete_sequence=["lightblue", "red", "pink",'Yellow','Orange'])
     fig.update_layout(
         title="Top 5 boomsoorten in Den Haag",
         xaxis_title="Boomsoort",
@@ -105,13 +108,14 @@ def map_amsterdam():
     marker_cluster = MarkerCluster(name="key", disableClusteringAtZoom=18).add_to(m)
 
     amsterdamm.apply(lambda x: folium.Marker([x["LAT"], x["LNG"]],
-                                             popup="Boomnummer: " + str(x["Boomnummer"]) + "<br><br>" + "Soortnaam: " +
-                                                   x["Soortnaam_NL"],
-                                             icon=folium.Icon(color='black', icon_color='#FFFFFF')).add_to(
-        marker_cluster),
+                                            popup="Boomnummer: " + str(x["Boomnummer"]) + "<br><br>"
+                                                + "Soortnaam: " + x["Soortnaam_NL"] + "<br><br>"
+                                                + "Leeftijd: " + str(int(x["leeftijd"])) + " Jaar",
+                                            icon=folium.Icon(color='green', icon_color='#FFFFFF')).add_to(marker_cluster),
                      axis=1)
 
     #folium.LayerControl().add_to(m)
+    st.write("Map van de bomen in Amsterdam")
     folium_static(m)
 
 def map_denhaag():
@@ -123,13 +127,14 @@ def map_denhaag():
     marker_cluster = MarkerCluster(name="key", disableClusteringAtZoom=16).add_to(m)
 
     denhaag.apply(lambda x: folium.Marker([x["LAT"], x["LONG"]],
-                                          popup="Boomnummer: " + str(
-                                              x["BOOMNUMMER"]) + "<br><br>" + "Soortnaam: " + str(
-                                              x["BOOMSOORT_NEDERLANDS"]),
-                                          icon=folium.Icon(color='black', icon_color='#FFFFFF')).add_to(marker_cluster),
+                                          popup="Boomnummer: " + str(x["BOOMNUMMER"]) + "<br><br>"
+                                                + "Soortnaam: " + str(x["BOOMSOORT_NEDERLANDS"]) + "<br><br>"
+                                                + "Leeftijd: " + str(x["LEEFTIJD"]).split(".")[0] + " Jaar",
+                                          icon=folium.Icon(color='green', icon_color='#FFFFFF')).add_to(marker_cluster),
                   axis=1)
 
     #folium.LayerControl().add_to(m)
+    st.write("Map van de bomen in Den Haag")
     folium_static(m)
 
 def main():
@@ -138,26 +143,26 @@ def main():
 
     with col1:
         st.image("assets/amsterdam.png", width=200)
-        show_with_options(boomsoorten_amsterdam, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+        show_with_options(boomsoorten_amsterdam, "")
     with col3:
         st.image("assets/denhaag.png", width=200)
-        show_with_options(boomsoorten_denhaag, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+        show_with_options(boomsoorten_denhaag, "")
     st.markdown("***")
     with col1:
-        show_with_options(boomsoorten_t5_a, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+        show_with_options(boomsoorten_t5_a, "")
 
     with col3:
-        show_with_options(boomsoorten_t5_d, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+        show_with_options(boomsoorten_t5_d, "")
 
     show_with_options(aantal_bomen,
-                      "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+                      "")
     show_with_options(aantal_soorten_bomen,
-                      "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+                      "")
     with col1:
-        show_with_options(map_amsterdam, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+        show_with_options(map_amsterdam, "")
     with col3:
-        show_with_options(map_denhaag,
-                          "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+        show_with_options(map_denhaag,"")
+                          #"Map van de bomen in Den Haag")
 
 
 st.markdown("***")
