@@ -47,6 +47,8 @@ df_eik_denhaag["Soortnaam"] = df_eik_denhaag.index.str.title()
 #print(df_denhaag['BOOMSOORT_NEDERLANDS'].isna().sum())
 #df_denhaag['BOOMSOORT_NEDERLANDS'] = df_denhaag['BOOMSOORT_NEDERLANDS'].astype("str").str.title()
 
+
+
 def eikenbomen_amsterdam():
     fig = px.histogram(df_eik_amsterdam, x=df_eik_amsterdam.index, y='Soortnaam_NL')
 
@@ -117,11 +119,12 @@ def map_denhaag():
     folium_static(m)
 
 def aantal_eiken():
-
     denhaag = df_denhaag.dropna(subset=["BOOMNUMMER", 'BOOMSOORT_NEDERLANDS'])
     denhaag = denhaag[denhaag['BOOMSOORT_NEDERLANDS'].str.contains("eik")]
     n_eik_d = len(denhaag)
     n_eik_a = len(amsterdam[amsterdam['Soortnaam_NL'].str.contains("eik")])
+
+
 
     dict2 = {"Count": [n_eik_a, n_eik_d]}
     brics2 = pd.DataFrame(dict2)
@@ -137,7 +140,7 @@ def aantal_eiken():
 
 def amsterdam_eik_pie():
     eik = ["Eik", "Geen Eik"]
-    n =  [13850, 259431]
+    n =  [13850, 245581]
     fig1, ax1 = plt.subplots()
     ax1.pie(n, labels=eik, autopct='%1.1f%%')
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
@@ -146,7 +149,7 @@ def amsterdam_eik_pie():
 
 def denhaag_eik_pie():
     eik = ["Eik", "Geen Eik"]
-    n =  [12111, 162203]
+    n =  [12111, 150092]
     fig1, ax1 = plt.subplots()
     ax1.pie(n, labels=eik, autopct='%1.1f%%')
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
