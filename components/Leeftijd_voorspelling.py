@@ -50,7 +50,7 @@ def radius_leeftijd_amsterdam_ols():
     fig.update_layout(
         #title="Radius klasse per Leeftijd",
         legend_title_text= 'Soortnaam',
-        yaxis_title="Radiusklasse",
+        yaxis_title="Radiusklasse in (m)",
         xaxis_title="Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
 
@@ -151,5 +151,6 @@ def main():
 
         show_with_options(boomnummer_leeftijd_denhaag,"Leeftijd per Boomnummer Den Haag")
         st.write("In het bovenstaande figuur is een regressieanalyse te zien van de leeftijd van de bomen per boomnummer in Den Haag. Uit dit figuur blijkt over het algemeen dat hoe ouder de bomen zijn hoe lager het boomnummer is. Dit is voornamelijk te zien aan de spreiding en niet zo zeer aan de regressieplot")
+
 
 
