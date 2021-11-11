@@ -139,8 +139,12 @@ def aantal_eiken():
 
 
 def amsterdam_eik_pie():
+    n_eik_a = len(amsterdam[amsterdam['Soortnaam_NL'].str.contains("eik")])
+    nn_eik_a = len(amsterdam) - len(amsterdam[amsterdam['Soortnaam_NL'].str.contains("eik")])
+
     eik = ["Eik", "Geen Eik"]
-    n =  [13850, 245581]
+    n =  [n_eik_a, nn_eik_a]
+
     fig1, ax1 = plt.subplots()
     ax1.pie(n, labels=eik, autopct='%1.1f%%')
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
@@ -148,8 +152,14 @@ def amsterdam_eik_pie():
     st.pyplot(fig1)
 
 def denhaag_eik_pie():
+    denhaag = df_denhaag.dropna(subset=["BOOMNUMMER", 'BOOMSOORT_NEDERLANDS'])
+    denhaag = denhaag[denhaag['BOOMSOORT_NEDERLANDS'].str.contains("eik")]
+    n_eik_d = len(denhaag)
+    nn_eik_d = len(df_denhaag) - len(denhaag)
+
     eik = ["Eik", "Geen Eik"]
-    n =  [12111, 150092]
+    n =  [n_eik_d, nn_eik_d]
+
     fig1, ax1 = plt.subplots()
     ax1.pie(n, labels=eik, autopct='%1.1f%%')
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
