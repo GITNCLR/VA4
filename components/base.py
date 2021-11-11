@@ -3,8 +3,8 @@ from datetime import date
 import components.Bomen
 import components.landingpage
 import components.Eikenbomen
-import components.Eigenaren
 import components.Leeftijd
+import components.Leeftijd_voorspelling
 
 def sidebar():
     # Global variables to check on plots
@@ -22,8 +22,8 @@ def sidebar():
         "Home": components.landingpage,
         "Bomen": components.Bomen,
         "Eikenbomen": components.Eikenbomen,
-        "Eigenaren": components.Eigenaren,
-        "Leeftijd": components.Leeftijd
+        "Leeftijd": components.Leeftijd,
+        "Leeftijd Voorspelling": components.Leeftijd_voorspelling
     }
 
     st.sidebar.title("Navigatie")

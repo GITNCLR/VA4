@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.helpers import fetchLaadPaalData, show_with_options
+from utils.helpers import show_with_options
 import components.base as SampleS
 import plotly.express as px
 import streamlit as st
@@ -90,9 +90,10 @@ def radius_leeftijd_amsterdam():
     st.plotly_chart(fig, use_container_width=True)
 
 def radius_leeftijd_amsterdam_ols():
-    fig = px.scatter(amsterdam, y='RADIUS', x='leeftijd', trendline="ols", opacity= 0.5, trendline_color_override = "red")
+    fig = px.scatter(amsterdam, y='RADIUS', x='leeftijd', color = "Soortnaam_NL", trendline="ols", opacity= 0.5)#, trendline_color_override = "red")
     fig.update_layout(
         title="Radius klasse per Leeftijd",
+        legend_title_text= 'Soortnaam',
         yaxis_title="Radiusklasse",
         xaxis_title="Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
@@ -142,7 +143,7 @@ def boomstam_leeftijd_corr_dh():
     #sn.regplot(x="STAMDIAMETERKLASSE2", y="LEEFTIJD", data=df_denhaag, ci=None, scatter_kws={'alpha': 0.5}, ax=ax)
     #st.write(fig)
 
-    fig = px.scatter(df_denhaag, y='STAMDIAMETERKLASSE2', x='LEEFTIJD', trendline="ols", opacity= 0.5, trendline_color_override = "red")
+    fig = px.scatter(df_denhaag, y='STAMDIAMETERKLASSE2', x='LEEFTIJD', color = 'BOOMSOORT_NEDERLANDS', trendline="ols", opacity= 0.5)#, trendline_color_override = "red")
     fig.update_layout(
         title="Stamdiameterklasse per Leeftijd Denhaag",
         yaxis_title="Stamdiameterklasse in (cm)",
@@ -210,18 +211,3 @@ def main():
                           "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
 
 
-    with st.expander("Voorspellingen op basis van Leeftijd"):
-        col1, _, col3 = st.columns([3, 1, 3])
-        with col1:
-            show_with_options(boomstam_leeftijd_corr_A,
-                              "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
-            show_with_options(radius_leeftijd_amsterdam_ols,
-                              "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
-            show_with_options(boomnummer_leeftijd_amsterdam,
-                              "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
-        with col3:
-            show_with_options(boomstam_leeftijd_corr_dh,
-                              "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
-
-            show_with_options(boomnummer_leeftijd_denhaag,
-                              "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")

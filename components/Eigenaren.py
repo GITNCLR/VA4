@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.helpers import fetchLaadPaalData, show_with_options
+from utils.helpers import show_with_options
 import plotly.express as px
 import streamlit as st
 import pandas as pd

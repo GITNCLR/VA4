@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.helpers import fetchLaadPaalData, show_with_options
+from utils.helpers import show_with_options
 import components.base as SampleS
 import plotly.express as px
 import streamlit as st
@@ -30,13 +30,13 @@ amsterdam["leeftijd"] = amsterdam["leeftijd"].replace(2021,0)
 
 df_denhaag=pd.read_csv('data/bomen_denhaag.csv',sep=";", encoding="latin-1")
 df_denhaag['BOOMSOORT_NEDERLANDS'] = df_denhaag['BOOMSOORT_NEDERLANDS'].str.title()
-naless_denhaag = df_denhaag.dropna(subset = ['BOOMSOORT_NEDERLANDS'])
+naless_denhaag = df_denhaag.dropna(subset = ['BOOMSOORT_NEDERLANDS', 'EIGENAAR'])
 
 
 def boomsoorten_amsterdam():
     fig = px.histogram(amsterdam, x='Soortnaam_NL')
     fig.update_layout(
-        title="Boomsoorten in Amsterdam",
+        title="Aantal bomen per boomsoort in Amsterdam",
         xaxis_title="Boomsoort",
         yaxis_title="Aantal")
     st.plotly_chart(fig, use_container_width=True)
@@ -45,7 +45,7 @@ def boomsoorten_amsterdam():
 def boomsoorten_denhaag():
     fig = px.histogram(naless_denhaag, x='BOOMSOORT_NEDERLANDS')
     fig.update_layout(
-        title="Boomsoorten in Den Haag",
+        title="Aantal bomen per boomsoort in Den Haag",
         xaxis_title="Boomsoort",
         yaxis_title="Aantal")
     st.plotly_chart(fig, use_container_width=True)
@@ -137,8 +137,29 @@ def map_denhaag():
     st.write("Map van de bomen in Den Haag")
     folium_static(m)
 
+def eigenaren_amsterdam():
+    fig = px.histogram(amsterdam, x='Eigenaar', color='Eigenaar')
+    fig.update_layout(
+        title="Het aantal bomen per eigenaar in Amsterdam",
+        xaxis_title="Eigenaar",
+        yaxis_title="Aantal")
+    st.plotly_chart(fig, use_container_width=True)
+
+def eigenaren_denhaag():
+    fig = px.histogram(naless_denhaag, x='EIGENAAR', color='EIGENAAR')
+    fig.update_layout(
+        title="Het aantal bomen per eigenaar in Den Haag",
+        legend = { "title" : "Eigenaar"},
+        xaxis_title="Eigenaar",
+        yaxis_title="Aantal")
+    st.plotly_chart(fig, use_container_width=True)
+
+
+
+
 def main():
     st.header("Bomen")
+    st.markdown("***")
     col1, _, col3 = st.columns([3, 1, 3])
 
     with col1:
@@ -147,23 +168,57 @@ def main():
     with col3:
         st.image("assets/denhaag.png", width=200)
         show_with_options(boomsoorten_denhaag, "")
-    st.markdown("***")
+
+
+    col1,col2, col3 = st.columns([1, 8, 1])
+    with col2:
+        st.markdown("In de bovenstaande figuren zijn het aantal bomen per boomsoort in Amsterdam en Den Haag te zien. Links zijn de boomsoorten van Amsterdam te zien en rechts de boomsoorten van Den Haag. Vanwege de grote hoeveelheid boomsoorten worden niet alle boomsoorten in tekst weergegeven. Voor een duidelijker beeld kan er ingezoomd worden.")
+        st.markdown("***")
+
+    col1, _, col3 = st.columns([3, 1, 3])
     with col1:
         show_with_options(boomsoorten_t5_a, "")
 
     with col3:
         show_with_options(boomsoorten_t5_d, "")
 
-    show_with_options(aantal_bomen,
-                      "")
-    show_with_options(aantal_soorten_bomen,
-                      "")
+    col1,col2, col3 = st.columns([1, 8, 1])
+    with col2:
+        st.markdown("In de bovenstaande figuren is ingezoomd op de top vijf meest voorkomende boomsoorten in Amsterdam en Den Haag. In het linker figuur is te zien dat de meest voorkomende boomsoort in Amsterdam de gewone plataan is. In het rechter figuur is te zien dat de meest voorkomende boomsoort in Den Haag de es is.")
+        st.markdown("***")
+    col1, _, col3 = st.columns([3, 1, 3])
+
+    col1,col2, col3 = st.columns([1, 8, 1])
+    with col2:
+        show_with_options(aantal_soorten_bomen,"")
+        st.markdown("In het bovenstaande figuur zijn het aantal soorten bomen in Amsterdam en Den Haag te zien. Uit dit figuur blijkt dat Amsterdam meer soorten bomen heeft dan Den Haag. Amsterdam heeft namelijk 625 verschillende boomsoorten en Den Haag 377.")
+        st.markdown("***")
+        show_with_options(aantal_bomen,"")
+        st.markdown("In het bovenstaande figuur zijn het aantal bomen in Amsterdam en Den Haag te zien. Uit dit figuur blijkt dat Amsterdam meer bomen heeft dan Den Haag.")
+        st.markdown("***")
+
+    col1, _, col3 = st.columns([3, 1, 3])
     with col1:
         show_with_options(map_amsterdam, "")
     with col3:
         show_with_options(map_denhaag,"")
-                          #"Map van de bomen in Den Haag")
 
+    col1,col2, col3 = st.columns([1, 8, 1])
+    with col2:
+        st.markdown("In de linker kaart zijn de bomen in Amsterdam te zien en in de rechterkaart de bomen in Den Haag. Als er een specifieke boom wordt geselecteerd staat er informatie over de leeftijd van de boom, het boomnummer en de soortnaam.")
+        st.markdown("***")
+    col1, _, col3 = st.columns([3, 1, 3])
+
+    with col1:
+        show_with_options(eigenaren_amsterdam, "")
+    with col3:
+        show_with_options(eigenaren_denhaag, "")
+
+    col1,col2, col3 = st.columns([1, 8, 1])
+    with col2:
+        st.markdown("In de bovenstaande figuren zijn het aantal bomen per eigenaar in Amsterdam en Den Haag te zien. Uit het linker figuur blijkt dat er in Amsterdam 7 verschillende eigenaren van bomen bestaan. De gemeente Amsterdam bezit de meeste bomen. In het rechter figuur zijn de verschillende eigenaren van de bomen in Den Haag te zien. Ook uit dit figuur blijkt dat de gemeente Den Haag de meeste bomen bezit.")
+        st.markdown("***")
+    col1, _, col3 = st.columns([3, 1, 3])
 
 st.markdown("***")
 
