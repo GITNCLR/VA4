@@ -82,12 +82,13 @@ def boomhoogte_leeftijd_amsterdam():
     st.plotly_chart(fig, use_container_width=True)
 
 def radius_leeftijd_amsterdam():
-    fig = px.box(amsterdam, x='RADIUS', y='leeftijd')
+    fig = px.scatter(amsterdam, y='RADIUS', x='leeftijd', trendline="ols", opacity= 0.5, trendline_color_override = "red")
     fig.update_layout(
-        title="Leeftijd per Radius klasse",
-        xaxis_title="Radiusklasse",
-        yaxis_title="Leeftijd in jaren")
+        title="Radius klasse per Leeftijd",
+        yaxis_title="Radiusklasse",
+        xaxis_title="Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
+
 
 def stamdia_leeftijd_denhaag():
     fig = px.box(df_denhaag, x='STAMDIAMETERKLASSE', y='LEEFTIJD',
@@ -99,6 +100,8 @@ def stamdia_leeftijd_denhaag():
         yaxis_title="Leeftijd in jaren")
 
     st.plotly_chart(fig, use_container_width=True)
+
+
 
 def stadsdeel_leeftijd_denhaag():
     fig = px.box(df_denhaag, x='STADSDEEL', y='LEEFTIJD')
@@ -124,14 +127,20 @@ def boomstam_leeftijd_corr_dh():
 
     df = pd.DataFrame(df_denhaag, columns=['STAMDIAMETERKLASSE2', 'LEEFTIJD'])
 
-    #corr_mat_dh = df.corr()
-    #fig = sn.heatmap(corr_mat_dh, annot=True)
-    #st.pyplot(fig, use_container_width=True)
-
     fig, ax = plt.subplots()
     sn.heatmap(df.corr(), ax=ax,annot=True)
     st.write(fig)
+    #fig, ax = plt.subplots()
+    #sn.regplot(x="STAMDIAMETERKLASSE2", y="LEEFTIJD", data=df_denhaag, ci=None, scatter_kws={'alpha': 0.5}, ax=ax)
+    #st.write(fig)
 
+    fig = px.scatter(df_denhaag, y='STAMDIAMETERKLASSE2', x='LEEFTIJD', trendline="ols", opacity= 0.5, trendline_color_override = "red")
+    fig.update_layout(
+        title="Stamdiameterklasse per Leeftijd Denhaag",
+        yaxis_title="Stamdiameterklasse in (cm)",
+        xaxis_title="Leeftijd in jaren")
+
+    st.plotly_chart(fig, use_container_width=True)
 
 def boomstam_leeftijd_corr_A():
 
@@ -145,12 +154,24 @@ def boomstam_leeftijd_corr_A():
     sn.heatmap(df.corr(), ax=ax,annot=True)
     st.write(fig)
 
+    #fig, ax = plt.subplots()
+    #sn.regplot(x="RADIUS", y="leeftijd", data=amsterdam, ci=None, scatter_kws={'alpha': 0.5}, ax=ax)
+    #st.write(fig)
+
 def boomnummer_leeftijd_amsterdam():
-    fig = px.scatter(amsterdam, x='Boomnummer', y='leeftijd')
+    fig = px.scatter(amsterdam, y='Boomnummer', x='leeftijd', opacity= 0.5, trendline="ols", trendline_color_override = "red")
     fig.update_layout(
     title = "Leeftijd per Boomnummer Amsterdam",
-    xaxis_title = "Boomnummer",
-    yaxis_title = "Leeftijd in jaren")
+    yaxis_title = "Boomnummer",
+    xaxis_title = "Leeftijd in jaren")
+    st.plotly_chart(fig, use_container_width=True)
+
+def boomnummer_leeftijd_denhaag():
+    fig = px.scatter(df_denhaag, y='BOOMNUMMER', x='LEEFTIJD', opacity= 0.5, trendline="ols", trendline_color_override = "red")
+    fig.update_layout(
+    title = "Leeftijd per Boomnummer Den Haag",
+    yaxis_title = "Boomnummer",
+    xaxis_title = "Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
 
 def main():
@@ -185,6 +206,9 @@ def main():
                           "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
         show_with_options(boomstam_leeftijd_corr_dh,
                           "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+
+        show_with_options(boomnummer_leeftijd_denhaag,
+                  "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
 
 
 

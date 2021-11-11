@@ -7,6 +7,7 @@ import pandas as pd
 import folium
 from folium.plugins import MarkerCluster
 from streamlit_folium import folium_static
+import matplotlib.pyplot as plt
 import plotly.figure_factory as ff
 import plotly.graph_objects as go
 from statsmodels.formula.api import ols
@@ -134,6 +135,24 @@ def aantal_eiken():
     st.plotly_chart(fig, use_container_width=True)
 
 
+def amsterdam_eik_pie():
+    eik = ["Eik", "Geen Eik"]
+    n =  [13850, 259431]
+    fig1, ax1 = plt.subplots()
+    ax1.pie(n, labels=eik, autopct='%1.1f%%')
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+    st.pyplot(fig1)
+
+def denhaag_eik_pie():
+    eik = ["Eik", "Geen Eik"]
+    n =  [12111, 162203]
+    fig1, ax1 = plt.subplots()
+    ax1.pie(n, labels=eik, autopct='%1.1f%%')
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+    st.pyplot(fig1)
+
 def main():
     st.header("Eikenbomen")
     col1, col2, col3 = st.columns([1, 2, 1])
@@ -149,15 +168,22 @@ def main():
     col1, _, col3 = st.columns([3, 1, 3])
 
     with col1:
-        show_with_options(eikenbomen_amsterdam, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+        show_with_options(eikenbomen_amsterdam, "")
     with col3:
-        show_with_options(eikenbomen_denhaag, "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+        show_with_options(eikenbomen_denhaag, "")
     with col1:
         show_with_options(map_amsterdam,
-                          "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+                          "")
     with col3:
         show_with_options(map_denhaag,
-                          "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+                          "")
+    with col1:
+        show_with_options(amsterdam_eik_pie,
+                          "")
+    with col3:
+        show_with_options(denhaag_eik_pie,
+                          "")
+
     st.markdown("***")
     show_with_options(aantal_eiken,
                   "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
