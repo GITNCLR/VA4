@@ -158,7 +158,7 @@ def eigenaren_denhaag():
 
 
 def main():
-    st.header("Bomen")
+    st.header("Bomen Algemeen")
     st.markdown("***")
     col1, _, col3 = st.columns([3, 1, 3])
 

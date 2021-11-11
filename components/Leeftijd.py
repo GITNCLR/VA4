@@ -184,7 +184,7 @@ def boomnummer_leeftijd_denhaag():
     st.plotly_chart(fig, use_container_width=True)
 
 def main():
-    st.header("Leeftijd")
+    st.header("Leeftijd Analyse")
 
     st.markdown("***")
     show_with_options(leeftijd,

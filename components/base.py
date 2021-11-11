@@ -20,9 +20,9 @@ def sidebar():
 
     pages = {
         "Home": components.landingpage,
-        "Bomen": components.Bomen,
+        "Bomen Algemeen": components.Bomen,
         "Eikenbomen": components.Eikenbomen,
-        "Leeftijd": components.Leeftijd,
+        "Leeftijd Analyse": components.Leeftijd,
         "Leeftijd Voorspelling": components.Leeftijd_voorspelling
     }
 
@@ -71,6 +71,7 @@ def sample_size():
 
 def main():
     sidebar()
+
 
 
 
