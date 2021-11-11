@@ -187,9 +187,3 @@ def main():
     st.markdown("***")
     show_with_options(aantal_eiken,
                   "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
-
-
-
-
-
-
