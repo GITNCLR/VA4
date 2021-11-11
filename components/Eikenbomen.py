@@ -53,9 +53,9 @@ def eikenbomen_amsterdam():
     fig = px.histogram(df_eik_amsterdam, x=df_eik_amsterdam.index, y='Soortnaam_NL')
 
     fig.update_layout(
-        title="Eikenbomen in Amsterdam",
+        #title="Eikenbomen per soort in Amsterdam",
         xaxis_title="Boomsoort",
-        yaxis_title="Aantal")
+        yaxis_title="Aantal bomen")
     st.plotly_chart(fig, use_container_width=True)
 
 
@@ -63,9 +63,9 @@ def eikenbomen_denhaag():
     fig = px.histogram(df_eik_denhaag, x="Soortnaam", y='BOOMSOORT_NEDERLANDS')
 
     fig.update_layout(
-        title="Eikenbomen in Den Haag",
+        #title="Eikenbomen per soort in Den Haag",
         xaxis_title="Boomsoort",
-        yaxis_title="Aantal")
+        yaxis_title="Aantal bomen")
     st.plotly_chart(fig, use_container_width=True)
 
 def map_amsterdam():
@@ -131,9 +131,9 @@ def aantal_eiken():
     brics2.index = ['Amsterdam', 'Den Haag']
     fig = px.bar(brics2, x=['Amsterdam', 'Den Haag'], y='Count', color=['Amsterdam', 'Den Haag'])
     fig.update_layout(
-        title="Aantal Eikenbomen in Amsterdam en Den Haag",
+        #title="Aantal Eikenbomen in Amsterdam en Den Haag",
         xaxis_title="Stad",
-        yaxis_title="Aantal soorten bomen",
+        yaxis_title="Aantal Eikenbomen",
         legend_title="Stad")
     st.plotly_chart(fig, use_container_width=True)
 
@@ -181,22 +181,43 @@ def main():
     col1, _, col3 = st.columns([3, 1, 3])
 
     with col1:
-        show_with_options(eikenbomen_amsterdam, "")
+        show_with_options(eikenbomen_amsterdam, "Eikenbomen per soort in Amsterdam")
     with col3:
-        show_with_options(eikenbomen_denhaag, "")
+        show_with_options(eikenbomen_denhaag, "Eikenbomen per soort in Den Haag")
+
+    col1,col2, col3 = st.columns([1, 8, 1])
+    with col2:
+        st.markdown("In de bovenstaande figuren zijn het aantal eikenbomen per eikensoort te zien voor Amsterdam en Den Haag. Wat opvalt hier aan is dat de zomereik in beide steden het meeste voorkomt. Daarnaast is te zie dat de moeras eik en de zomer eik in zowel Amsterdam en Den Haag op de tweede en de derde plek staan. Het valt op dat er in Amsterdam een stuk meer verschillende soorten eiken aanwezig zijn dan in Den Haag")
+        st.markdown("***")
+    col1, _, col3 = st.columns([3, 1, 3])
+
+
     with col1:
         show_with_options(map_amsterdam,
-                          "")
+                          "Eiken in Amsterdam")
     with col3:
         show_with_options(map_denhaag,
-                          "")
+                          "Eiken in Den Haag")
+
+    col1,col2, col3 = st.columns([1, 8, 1])
+    with col2:
+        st.markdown("Er zijn 2 kaarten geplot met de locaties van alle Eikenbomen in Amsterdam en in Den Haag. Opvallend hier aan is dat er in het centrum van Amsterdam weinig tot geen eikenbomen aanwezig zijn, terwijl er in het centrum van Den Haag iet meer eikenbomen te vinden zijn. Wanneer er een sample size van 20.000 is geselecteerd zijn alle eikenbomen zichtbaar.")
+        st.markdown("***")
+    col1, _, col3 = st.columns([3, 1, 3])
+
     with col1:
         show_with_options(amsterdam_eik_pie,
-                          "")
+                          "Verhouding Eikenbomen en niet eikenbomen in Amsterdam")
     with col3:
         show_with_options(denhaag_eik_pie,
-                          "")
+                          "Verhouding Eikenbomen en niet eikenbomen in Den Haag")
+
+    col1,col2, col3 = st.columns([1, 8, 1])
+    with col2:
+        st.markdown("Als er wordt gekeken naar het aantal eikenbomen ten opzichte van het totaal aantal bomen is te zien dat er in Den Haag een groter percentage van de bomen een eikenboom is (7.5%) dan in Amsterdam(5.3%).")
+
 
     st.markdown("***")
-    show_with_options(aantal_eiken,
-                  "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+    show_with_options(aantal_eiken, "Aantal Eikenbomen in Amsterdam en Den haag")
+    st.markdown("Hoewel het aandeel eikenbomen in Den Haag meer is dan in Amsterdam is het aantal Eikenbomen in Amsterdam juist meer dan in Den Haag. Dit komt omdat er simpelweg veel meer bomen in Amsterdam zijn.")
+    st.markdown("***")

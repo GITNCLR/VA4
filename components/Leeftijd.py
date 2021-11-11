@@ -47,7 +47,7 @@ def leeftijd():
                          name='Den Haag',
                          marker_color='lightseagreen'))
 
-    fig.update_layout(title_text="Leeftijd van bomen in Den Haag en Amsterdam", xaxis_title='Leeftijd in jaren')
+    fig.update_layout(xaxis_title='Leeftijd in jaren') #title_text="Leeftijd van bomen in Den Haag en Amsterdam",
 
     st.plotly_chart(fig, use_container_width=True)
 
@@ -63,7 +63,7 @@ def leeftijd_hist():
                                marker_color='lightseagreen'))
 
     fig.update_layout(barmode='overlay',
-                      title_text='Histogram van de leeftijd van bomen in Amsterdam en Den Haag',
+                      #title_text='Histogram van de leeftijd van bomen in Amsterdam en Den Haag',
                       xaxis_title='Leeftijd in jaren',
                       yaxis_title='Aantal bomen')
 
@@ -77,14 +77,14 @@ def boomhoogte_leeftijd_amsterdam():
                  category_orders={'Boomhoogte': ['tot 6 m.', '6 tot 9 m.', '6 tot 12 m.', '9 tot 12 m.', '12 tot 15 m.',
                                                  '12 tot 18 m.', '15 tot 18 m.', '18 tot 24 m.', '24 m. en hoger',
                                                  'Onbekend']})
-    fig.update_layout(title="Leeftijd per boomhoogte klasse",
-        yaxis_title="Leeftijd in jaren")
+    fig.update_layout(#title="Leeftijd per boomhoogte klasse",
+                    yaxis_title="Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
 
 def radius_leeftijd_amsterdam():
     fig = px.box(amsterdam, x='RADIUS', y='leeftijd')
     fig.update_layout(
-        title="Radius klasse per Leeftijd",
+        #title="Radius klasse per Leeftijd",
         xaxis_title="Radiusklasse",
         yaxis_title="Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
@@ -92,7 +92,7 @@ def radius_leeftijd_amsterdam():
 def radius_leeftijd_amsterdam_ols():
     fig = px.scatter(amsterdam, y='RADIUS', x='leeftijd', color = "Soortnaam_NL", trendline="ols", opacity= 0.5)#, trendline_color_override = "red")
     fig.update_layout(
-        title="Radius klasse per Leeftijd",
+        #title="Radius klasse per Leeftijd",
         legend_title_text= 'Soortnaam',
         yaxis_title="Radiusklasse",
         xaxis_title="Leeftijd in jaren")
@@ -104,7 +104,7 @@ def stamdia_leeftijd_denhaag():
                  category_orders={
                      'STAMDIAMETERKLASSE': ['0-10 cm', '10-25 cm', '25-50 cm', '50-75 cm', '75-100 cm', '>100 cm']})
     fig.update_layout(
-        title="Leeftijd per Stamdiameterklasse Denhaag",
+        #title="Leeftijd per Stamdiameterklasse Denhaag",
         xaxis_title="Stamdiameterklasse",
         yaxis_title="Leeftijd in jaren")
 
@@ -115,16 +115,16 @@ def stamdia_leeftijd_denhaag():
 def stadsdeel_leeftijd_denhaag():
     fig = px.box(df_denhaag, x='STADSDEEL', y='LEEFTIJD')
     fig.update_layout(
-    title = "Leeftijd per stadsdeel Den Haag",
-    xaxis_title = "Stadsdeel",
-    yaxis_title = "Leeftijd in jaren")
+        #title = "Leeftijd per stadsdeel Den Haag",
+        xaxis_title = "Stadsdeel",
+        yaxis_title = "Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
 
 
 def stadsdeel_leeftijd_amsterdam():
     fig = px.box(amsterdam, x='Beheerder', y='leeftijd')
     fig.update_layout(
-    title = "Leeftijd per Beheerder Amsterdam",
+    #title = "Leeftijd per Beheerder Amsterdam",
     xaxis_title = "Beheerder",
     yaxis_title = "Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
@@ -145,7 +145,7 @@ def boomstam_leeftijd_corr_dh():
 
     fig = px.scatter(df_denhaag, y='STAMDIAMETERKLASSE2', x='LEEFTIJD', color = 'BOOMSOORT_NEDERLANDS', trendline="ols", opacity= 0.5)#, trendline_color_override = "red")
     fig.update_layout(
-        title="Stamdiameterklasse per Leeftijd Denhaag",
+        #title="Stamdiameterklasse per Leeftijd Denhaag",
         yaxis_title="Stamdiameterklasse in (cm)",
         xaxis_title="Leeftijd in jaren")
 
@@ -170,17 +170,17 @@ def boomstam_leeftijd_corr_A():
 def boomnummer_leeftijd_amsterdam():
     fig = px.scatter(amsterdam, y='Boomnummer', x='leeftijd', opacity= 0.5, trendline="ols", trendline_color_override = "red")
     fig.update_layout(
-    title = "Leeftijd per Boomnummer Amsterdam",
-    yaxis_title = "Boomnummer",
-    xaxis_title = "Leeftijd in jaren")
+        #title = "Leeftijd per Boomnummer Amsterdam",
+        yaxis_title = "Boomnummer",
+        xaxis_title = "Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
 
 def boomnummer_leeftijd_denhaag():
     fig = px.scatter(df_denhaag, y='BOOMNUMMER', x='LEEFTIJD', opacity= 0.5, trendline="ols", trendline_color_override = "red")
     fig.update_layout(
-    title = "Leeftijd per Boomnummer Den Haag",
-    yaxis_title = "Boomnummer",
-    xaxis_title = "Leeftijd in jaren")
+        #title = "Leeftijd per Boomnummer Den Haag",
+        yaxis_title = "Boomnummer",
+        xaxis_title = "Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
 
 def main():
@@ -188,9 +188,13 @@ def main():
 
     st.markdown("***")
     show_with_options(leeftijd,
-                      "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+                      "Boxplot van de Leeftijd van de bomen in Den Haag en Amsterdam")
+    st.write("Om te kijken naar de verdeling van de leeftijd van de Bomen in Amsterdam en Den Haag zijn er twee boxplots geplot. Hiervoor zijn er outliers we gefilterd nadat de leeftijd van de oudste bomen in de twee steden is onderzocht. Omvallend is dat er in Amsterdam iets meer oudere bomen staan dan in Den Haag. De oudste bomen zijn echt wel in Den Haag te vinden.")
+    st.markdown("***")
+
     show_with_options(leeftijd_hist,
-                      "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+                      "Histogram van de Leeftijd van de bomen in Den Haag en Amsterdam")
+    st.write("Naast een boxplot is er een histogram gemaakt. Hierin is de verdeling te zien, maar er is ook te zien dat Amsterdam een stuk meer bomen heeft dan Den Haag. Opvallend hier in is ook de hoge piek van bomen van 0 jaar in Amsterdam.")
     st.markdown("***")
 
     col1, _, col3 = st.columns([3, 1, 3])
@@ -198,16 +202,32 @@ def main():
     with col1:
         st.image("assets/amsterdam.png", width=200)
         show_with_options(boomhoogte_leeftijd_amsterdam,
-                          "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+                          "Verdeling Leeftijd per Boomhoogteklasse")
+        st.write("Er is gekeken naar de leeftijd van de bomen per boomhoogte. Hieruit valt op te maken dat hoe wanneer de bomen ouder zijn ze in een hogere hoogte-klasse vallen")
+        st.markdown("***")
+
         show_with_options(stadsdeel_leeftijd_amsterdam,
-                          "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+                          "Verdeling Leeftijd per Beheerder Amsterdam")
+
+        st.write("Er zijn boxplots gemaakt van de leeftijd van de bomen in Amsterdam tegenover de beheerder van de bomen. Wat opvalt is dat er een aantal stadsdelen zijn waarbij de box van de boxplots dicht bij de 0 ligt, wat betekend dat de meeste bomen in dit gebied korgeleden zijn geplant. De oudste bomen va Amsterdam zijn te vinden in Stadsdeel Zuid en Stadsdeel Oost.")
+        st.markdown("***")
+
+
         show_with_options(radius_leeftijd_amsterdam,
-                      "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+                      "Verdeling Leeftijd per Radiusklasse")
+        st.write("De leeftijd van de bomen per radiusklasse. Doordat de radius van de bomen alleen in hele meter wordt gemeten is het handiger om deze in boxplots te plotten in plaats van een scotterplot. Opvallend aan dit figuur is dat de data van klasse 6 ontbreekt. Daarnaast zou je kunnen zeggen dat vanaf de radiusklasse 2 de leeftijd van de bomen steeds hoger ligt bij een hogere radiusklasse.")
+        st.markdown("***")
     with col3:
         st.image("assets/denhaag.png", width=200)
         show_with_options(stamdia_leeftijd_denhaag,
-                          "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+                          "Verdeling Leeftijd per stamdiameterklasse Den Haag")
+        st.write("De leeftijd van de boom is geplot tegenover de stamdiameterklasse van de bomen. Hier is een duidelijke trend te zien dat wanneer de leeftijd toe neemt, de bomen vaker is een hohgere stamdiameterklasse vallen.")
+        st.markdown("***")
+
         show_with_options(stadsdeel_leeftijd_denhaag,
-                          "In dit figuur kunt u zelf de x-en y as van een scatterplot bepalen door middel van de dropdown menu’s.")
+                          "Leeftijd per stadsdeel Den Haag")
+        st.write("Ook voor Den Haag is er gekeken naar de verdeling van leeftijd van de bomen per stadsdeel. Naast dat er minder stadsdelen zijn in Den Haag is er ook te zien dat de verdelingen veel meer op elkaar lijken. Alleen in Leidschvee-Ypenburg zijn de meeste bomen iets jonger dan in de rest van de stad. De oudste bomen van Den Haag zijn te vinden in Haagse Hout.")
+
+
 
 

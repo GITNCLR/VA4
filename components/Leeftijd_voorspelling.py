@@ -48,7 +48,7 @@ def radius_leeftijd_amsterdam_ols():
     amsterdam = amsterdam.sort_values("Soortnaam_NL")
     fig = px.scatter(amsterdam, y='RADIUS', x='leeftijd', color = "Soortnaam_NL", trendline="ols", opacity= 0.5)#, trendline_color_override = "red")
     fig.update_layout(
-        title="Radius klasse per Leeftijd",
+        #title="Radius klasse per Leeftijd",
         legend_title_text= 'Soortnaam',
         yaxis_title="Radiusklasse",
         xaxis_title="Leeftijd in jaren")
@@ -74,10 +74,10 @@ def boomstam_leeftijd_corr_dh():
     #fig, ax = plt.subplots()
     #sn.regplot(x="STAMDIAMETERKLASSE2", y="LEEFTIJD", data=df_denhaag, ci=None, scatter_kws={'alpha': 0.5}, ax=ax)
     #st.write(fig)
-
+    st.subheader("Voorspelling van Stamdiameterklasse op basis van leeftijd")
     fig = px.scatter(df_denhaag, y='STAMDIAMETERKLASSE2', x='LEEFTIJD', color = 'Soortnaam', trendline="ols", opacity= 0.5)#, trendline_color_override = "red")
     fig.update_layout(
-        title="Stamdiameterklasse per Leeftijd Denhaag",
+        #title="Stamdiameterklasse per Leeftijd Denhaag",
         yaxis_title="Stamdiameterklasse in (cm)",
         xaxis_title="Leeftijd in jaren")
 
@@ -102,7 +102,7 @@ def boomstam_leeftijd_corr_A():
 def boomnummer_leeftijd_amsterdam():
     fig = px.scatter(amsterdam, y='Boomnummer', x='leeftijd', opacity= 0.5, trendline="ols", trendline_color_override = "red")
     fig.update_layout(
-    title = "Leeftijd per Boomnummer Amsterdam",
+    #title = "Leeftijd per Boomnummer Amsterdam",
     yaxis_title = "Boomnummer",
     xaxis_title = "Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
@@ -110,7 +110,7 @@ def boomnummer_leeftijd_amsterdam():
 def boomnummer_leeftijd_denhaag():
     fig = px.scatter(df_denhaag, y='BOOMNUMMER', x='LEEFTIJD', opacity= 0.5, trendline="ols", trendline_color_override = "red")
     fig.update_layout(
-    title = "Leeftijd per Boomnummer Den Haag",
+    #title = "Leeftijd per Boomnummer Den Haag",
     yaxis_title = "Boomnummer",
     xaxis_title = "Leeftijd in jaren")
     st.plotly_chart(fig, use_container_width=True)
@@ -137,18 +137,19 @@ def main():
         st.write("In het bovenstaande figuur zijn de correlaties van verschillende variabelen met betrekking tot de bomen in Amsterdam weergegeven. Uit dit figuur blijkt dat er een positieve correlatie is tussen leeftijd en de radius van de bomen. Ook blijkt er een positieve correlatie tussen de leeftijd en het plantjaar van de bomen te zijn.")
         st.markdown("***")
 
-        show_with_options(radius_leeftijd_amsterdam_ols, "")
+        show_with_options(radius_leeftijd_amsterdam_ols, "Voorspelling van Radiusklasse op basis van leeftijd")
         st.write("In het bovenstaande figuur is een regressieanalyse te zien van de radius klasse per leeftijd. Uit dit figuur blijkt dat wanneer de leeftijd van de bomen hoger is de radius ook hoger is. De voorspelling is het meest betrouwbaar voor de bomen onder de 100 jaar, omdat de dataset voornamelijk bomen onder de 100 jaar bevat. Ook kan de voorspelling minder nauwkeurig zijn, omdat bomen niet altijd even snel blijven groeien.")
         st.markdown("***")
 
-        show_with_options(boomnummer_leeftijd_amsterdam, "")
+        show_with_options(boomnummer_leeftijd_amsterdam, "Leeftijd per Boomnummer Amsterdam")
         st.write("In het bovenstaande figuur is een regressieanalyse te zien van de leeftijd van de bomen per boomnummer in Amsterdam. Uit dit figuur blijkt over het algemeen dat hoe ouder de bomen zijn hoe lager het boomnummer is.")
-        st.markdown("***")
+
     with col3:
         show_with_options(boomstam_leeftijd_corr_dh, "Correlatie van de stamdiameter en leeftijd van de bomen in Den Haag")
         st.write("In dit figuur is een regressieanalyse te zien van de stamdiameterklasse per leeftijd van de bomen in Den Haag. In dit figuur is een stijgende lijn te zien. Dit betekent dat wanneer de leeftijd van de bomen stijgt, de stamdiameter toeneemt.")
         st.markdown("***")
 
-        show_with_options(boomnummer_leeftijd_denhaag,"")
+        show_with_options(boomnummer_leeftijd_denhaag,"Leeftijd per Boomnummer Den Haag")
         st.write("In het bovenstaande figuur is een regressieanalyse te zien van de leeftijd van de bomen per boomnummer in Den Haag. Uit dit figuur blijkt over het algemeen dat hoe ouder de bomen zijn hoe lager het boomnummer is. Dit is voornamelijk te zien aan de spreiding en niet zo zeer aan de regressieplot")
-        st.markdown("***")
+
+

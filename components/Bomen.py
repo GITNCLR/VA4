@@ -36,18 +36,18 @@ naless_denhaag = df_denhaag.dropna(subset = ['BOOMSOORT_NEDERLANDS', 'EIGENAAR']
 def boomsoorten_amsterdam():
     fig = px.histogram(amsterdam, x='Soortnaam_NL')
     fig.update_layout(
-        title="Aantal bomen per boomsoort in Amsterdam",
+        #title="Aantal bomen per boomsoort in Amsterdam",
         xaxis_title="Boomsoort",
-        yaxis_title="Aantal")
+        yaxis_title="Aantal bomen")
     st.plotly_chart(fig, use_container_width=True)
 
 
 def boomsoorten_denhaag():
     fig = px.histogram(naless_denhaag, x='BOOMSOORT_NEDERLANDS')
     fig.update_layout(
-        title="Aantal bomen per boomsoort in Den Haag",
+        #title="Aantal bomen per boomsoort in Den Haag",
         xaxis_title="Boomsoort",
-        yaxis_title="Aantal")
+        yaxis_title="Aantal bomen")
     st.plotly_chart(fig, use_container_width=True)
 
 
@@ -58,9 +58,9 @@ def boomsoorten_t5_a():
     fig = px.histogram(top5_amsterdam2, x=top5_amsterdam2.index, y='Soortnaam_NL', color=top5_amsterdam2.index, color_discrete_sequence=["green", "yellow", "orange", 'red', "lightblue"])
 
     fig.update_layout(
-        title="Top 5 boomsoorten in Amsterdam",
+        #title="Top 5 boomsoorten in Amsterdam",
         xaxis_title="Boomsoort",
-        yaxis_title="Aantal")
+        yaxis_title="Aantal bomen")
 
     st.plotly_chart(fig, use_container_width=True)
 
@@ -70,9 +70,9 @@ def boomsoorten_t5_d():
     top5_denhaag2 = pd.DataFrame(top5_denhaag)
     fig = px.histogram(top5_denhaag2, x=top5_denhaag2.index, y='BOOMSOORT_NEDERLANDS', color=top5_denhaag2.index, color_discrete_sequence=["lightblue", "red", "pink",'Yellow','Orange'])
     fig.update_layout(
-        title="Top 5 boomsoorten in Den Haag",
+        #title="Top 5 boomsoorten in Den Haag",
         xaxis_title="Boomsoort",
-        yaxis_title="Aantal")
+        yaxis_title="Aantal bomen")
     st.plotly_chart(fig, use_container_width=True)
 
 def aantal_bomen():
@@ -82,7 +82,7 @@ def aantal_bomen():
     brics.index = ['Amsterdam', 'Den Haag']
     fig = px.bar(brics, x=['Amsterdam', 'Den Haag'], y='Count', color=['Amsterdam', 'Den Haag'])
     fig.update_layout(
-        title="Aantal bomen in Amsterdam en Den Haag",
+        #title="Aantal bomen in Amsterdam en Den Haag",
         xaxis_title="Stad",
         yaxis_title="Aantal bomen",
         legend_title="Stad")
@@ -95,7 +95,7 @@ def aantal_soorten_bomen():
     brics2.index = ['Amsterdam', 'Den Haag']
     fig = px.bar(brics2, x=['Amsterdam', 'Den Haag'], y='Count', color=['Amsterdam', 'Den Haag'])
     fig.update_layout(
-        title="Aantal soorten bomen in Amsterdam en Den Haag",
+        #title="Aantal soorten bomen in Amsterdam en Den Haag",
         xaxis_title="Stad",
         yaxis_title="Aantal soorten bomen",
         legend_title="Stad")
@@ -115,7 +115,7 @@ def map_amsterdam():
                      axis=1)
 
     #folium.LayerControl().add_to(m)
-    st.write("Map van de bomen in Amsterdam")
+    #st.write("Map van de bomen in Amsterdam")
     folium_static(m)
 
 def map_denhaag():
@@ -134,24 +134,24 @@ def map_denhaag():
                   axis=1)
 
     #folium.LayerControl().add_to(m)
-    st.write("Map van de bomen in Den Haag")
+    #st.write("Map van de bomen in Den Haag")
     folium_static(m)
 
 def eigenaren_amsterdam():
     fig = px.histogram(amsterdam, x='Eigenaar', color='Eigenaar')
     fig.update_layout(
-        title="Het aantal bomen per eigenaar in Amsterdam",
+        #title="Het aantal bomen per eigenaar in Amsterdam",
         xaxis_title="Eigenaar",
-        yaxis_title="Aantal")
+        yaxis_title="Aantal bomen")
     st.plotly_chart(fig, use_container_width=True)
 
 def eigenaren_denhaag():
     fig = px.histogram(naless_denhaag, x='EIGENAAR', color='EIGENAAR')
     fig.update_layout(
-        title="Het aantal bomen per eigenaar in Den Haag",
+        #title="Het aantal bomen per eigenaar in Den Haag",
         legend = { "title" : "Eigenaar"},
         xaxis_title="Eigenaar",
-        yaxis_title="Aantal")
+        yaxis_title="Aantal bomen")
     st.plotly_chart(fig, use_container_width=True)
 
 
@@ -164,10 +164,10 @@ def main():
 
     with col1:
         st.image("assets/amsterdam.png", width=200)
-        show_with_options(boomsoorten_amsterdam, "")
+        show_with_options(boomsoorten_amsterdam, "Aantal bomen per boomsoort in Amsterdam")
     with col3:
         st.image("assets/denhaag.png", width=200)
-        show_with_options(boomsoorten_denhaag, "")
+        show_with_options(boomsoorten_denhaag, "Aantal bomen per boomsoort in Den Haag")
 
 
     col1,col2, col3 = st.columns([1, 8, 1])
@@ -177,10 +177,10 @@ def main():
 
     col1, _, col3 = st.columns([3, 1, 3])
     with col1:
-        show_with_options(boomsoorten_t5_a, "")
+        show_with_options(boomsoorten_t5_a, "Top 5 Boomsoorten in Amsterdam")
 
     with col3:
-        show_with_options(boomsoorten_t5_d, "")
+        show_with_options(boomsoorten_t5_d, "Top 5 Boomsoorten in Den Haag")
 
     col1,col2, col3 = st.columns([1, 8, 1])
     with col2:
@@ -190,18 +190,18 @@ def main():
 
     col1,col2, col3 = st.columns([1, 8, 1])
     with col2:
-        show_with_options(aantal_soorten_bomen,"")
+        show_with_options(aantal_soorten_bomen,"Aantal verschillende soorten bomen in Amsterdam en Den Haag")
         st.markdown("In het bovenstaande figuur zijn het aantal soorten bomen in Amsterdam en Den Haag te zien. Uit dit figuur blijkt dat Amsterdam meer soorten bomen heeft dan Den Haag. Amsterdam heeft namelijk 625 verschillende boomsoorten en Den Haag 377.")
         st.markdown("***")
-        show_with_options(aantal_bomen,"")
+        show_with_options(aantal_bomen,"Aantal bomen in Amsterdam en Denhaag")
         st.markdown("In het bovenstaande figuur zijn het aantal bomen in Amsterdam en Den Haag te zien. Uit dit figuur blijkt dat Amsterdam meer bomen heeft dan Den Haag.")
         st.markdown("***")
 
     col1, _, col3 = st.columns([3, 1, 3])
     with col1:
-        show_with_options(map_amsterdam, "")
+        show_with_options(map_amsterdam, "Map van de bomen in Amsterdam")
     with col3:
-        show_with_options(map_denhaag,"")
+        show_with_options(map_denhaag,"Map van de bomen in Den Haag")
 
     col1,col2, col3 = st.columns([1, 8, 1])
     with col2:
@@ -210,9 +210,9 @@ def main():
     col1, _, col3 = st.columns([3, 1, 3])
 
     with col1:
-        show_with_options(eigenaren_amsterdam, "")
+        show_with_options(eigenaren_amsterdam, "Het aantal bomen per eigenaar in Amsterdam")
     with col3:
-        show_with_options(eigenaren_denhaag, "")
+        show_with_options(eigenaren_denhaag, "Het aantal bomen per eigenaar in Den Haag")
 
     col1,col2, col3 = st.columns([1, 8, 1])
     with col2:
@@ -221,7 +221,6 @@ def main():
     col1, _, col3 = st.columns([3, 1, 3])
 
 st.markdown("***")
-
 
 
 
