@@ -46,13 +46,24 @@ df_denhaag = df_denhaag[df_denhaag['LEEFTIJD']<300]
 def radius_leeftijd_amsterdam_ols():
     global amsterdam
     amsterdam = amsterdam.sort_values("Soortnaam_NL")
-    fig = px.scatter(amsterdam, y='RADIUS', x='leeftijd', color = "Soortnaam_NL", trendline="ols", opacity= 0.5)#, trendline_color_override = "red")
+    fig = px.scatter(amsterdam, y='RADIUS', x='leeftijd', trendline="ols", opacity= 0.5, trendline_color_override = "red")
     fig.update_layout(
-        #title="Radius klasse per Leeftijd",
+
         legend_title_text= 'Soortnaam',
         yaxis_title="Radiusklasse in (m)",
         xaxis_title="Leeftijd in jaren")
+
+    fig2 = px.scatter(amsterdam, y='RADIUS', x='leeftijd', color = "Soortnaam_NL", trendline="ols", opacity= 0.5)#, trendline_color_override = "red")
+    fig2.update_layout(
+        title="Voorspelling van Radiusklasse op basis van Leeftijd per Soort in Amsterdam",
+        legend_title_text= 'Soortnaam',
+        yaxis_title="Radiusklasse in (m)",
+        xaxis_title="Leeftijd in jaren")
+
     st.plotly_chart(fig, use_container_width=True)
+    with st.expander("Voorspelling per soort Amsterdam", False):
+        st.plotly_chart(fig2, use_container_width=True)
+        st.write("Dubbelklik op een boomsoort in de legenda om de andere boomsoorten te verbergen.")
 
 
 
@@ -74,14 +85,23 @@ def boomstam_leeftijd_corr_dh():
     #fig, ax = plt.subplots()
     #sn.regplot(x="STAMDIAMETERKLASSE2", y="LEEFTIJD", data=df_denhaag, ci=None, scatter_kws={'alpha': 0.5}, ax=ax)
     #st.write(fig)
-    st.subheader("Voorspelling van Stamdiameterklasse op basis van leeftijd")
+    st.subheader("Voorspelling van Stamdiameterklasse op basis van leeftijd voor Den Haag")
     fig = px.scatter(df_denhaag, y='STAMDIAMETERKLASSE2', x='LEEFTIJD', color = 'Soortnaam', trendline="ols", opacity= 0.5)#, trendline_color_override = "red")
     fig.update_layout(
+        title="Voorspelling van Stamdiameterklasse op basis van Leeftijd per Soort in Den Haag",
+        yaxis_title="Stamdiameterklasse in (cm)",
+        xaxis_title="Leeftijd in jaren")
+
+    fig2 = px.scatter(df_denhaag, y='STAMDIAMETERKLASSE2', x='LEEFTIJD', trendline="ols", opacity= 0.5, trendline_color_override = "red")
+    fig2.update_layout(
         #title="Stamdiameterklasse per Leeftijd Denhaag",
         yaxis_title="Stamdiameterklasse in (cm)",
         xaxis_title="Leeftijd in jaren")
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig2, use_container_width=True)
+    with st.expander("Voorspelling per soort Den Haag", False):
+        st.plotly_chart(fig, use_container_width=True)
+        st.write("Dubbelklik op een boomsoort in de legenda om de andere boomsoorten te verbergen.")
 
 def boomstam_leeftijd_corr_A():
 
@@ -137,7 +157,7 @@ def main():
         st.write("In het bovenstaande figuur zijn de correlaties van verschillende variabelen met betrekking tot de bomen in Amsterdam weergegeven. Uit dit figuur blijkt dat er een positieve correlatie is tussen leeftijd en de radius van de bomen. Ook blijkt er een positieve correlatie tussen de leeftijd en het plantjaar van de bomen te zijn.")
         st.markdown("***")
 
-        show_with_options(radius_leeftijd_amsterdam_ols, "Voorspelling van Radiusklasse op basis van leeftijd")
+        show_with_options(radius_leeftijd_amsterdam_ols, "Voorspelling van Radiusklasse op basis van leeftijd voor Amsterdam")
         st.write("In het bovenstaande figuur is een regressieanalyse te zien van de radius klasse per leeftijd. Uit dit figuur blijkt dat wanneer de leeftijd van de bomen hoger is de radius ook hoger is. De voorspelling is het meest betrouwbaar voor de bomen onder de 100 jaar, omdat de dataset voornamelijk bomen onder de 100 jaar bevat. Ook kan de voorspelling minder nauwkeurig zijn, omdat bomen niet altijd even snel blijven groeien.")
         st.markdown("***")
 
@@ -151,6 +171,7 @@ def main():
 
         show_with_options(boomnummer_leeftijd_denhaag,"Leeftijd per Boomnummer Den Haag")
         st.write("In het bovenstaande figuur is een regressieanalyse te zien van de leeftijd van de bomen per boomnummer in Den Haag. Uit dit figuur blijkt over het algemeen dat hoe ouder de bomen zijn hoe lager het boomnummer is. Dit is voornamelijk te zien aan de spreiding en niet zo zeer aan de regressieplot")
+
 
 
 
